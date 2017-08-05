@@ -23,6 +23,8 @@ function *processEvent(event, context, callback) {
         callback('end fail');
     });
     // to quit finally
+    // TODO: データの保存をわかりやすくするために浅野川（諸江）に絞っています
+    // データ構造が決まったら、絞り込みは解除してループで全川のデータを入れてください
     console.log(data['4357_4_84276000_51']);
     callback(null, "success");
 };
