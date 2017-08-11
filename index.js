@@ -12,7 +12,7 @@ module.exports.handler = (event, context, callback) => {
 function *processEvent(event, context, callback) {
     console.log('lambda is started');
 
-    var options = {
+    const options = {
         uri: 'http://kasen.pref.ishikawa.jp/sp/data/timelineJson/4_10.json',
         headers: {
             'User-Agent': 'Request-Promise'
