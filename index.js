@@ -4,15 +4,16 @@ const promise = require('bluebird');
 const request = require('request-promise');
 const aws = require('aws-sdk');
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+const convert = require('./modules/convert');
 
 module.exports.handler = (event, context, callback) => {
     return promise.coroutine(processEvent)(event, context, callback);
-}
+};
 
 function *processEvent(event, context, callback) {
     console.log('lambda is started');
 
-    var options = {
+    const options = {
         uri: 'http://kasen.pref.ishikawa.jp/sp/data/timelineJson/4_10.json',
         headers: {
             'User-Agent': 'Request-Promise'
@@ -24,11 +25,9 @@ function *processEvent(event, context, callback) {
         console.error(err.stack);
         callback('end fail');
     });
-    // to quit finally
-    // TODO: データの保存をわかりやすくするために浅野川（諸江）に絞っています
-    // データ構造が決まったら、絞り込みは解除してループで全川のデータを入れてください
-    console.log(data['4357_4_84276000_51']);
-    const waterLevel = data['4357_4_84276000_51'];
+
+    const waterLevel = convert.toFormattedJson(data);
+    console.log(waterLevel);
 
     putWaterLevel(waterLevel)
         .then((res) => {
@@ -42,11 +41,15 @@ function *processEvent(event, context, callback) {
 }
 
 function putWaterLevel(body) {
+    const dt = new Date().getTime();
+    const fileName = `sample_json/waterLevel${dt}.json`;
+
     const params = {
         Bucket: process.env.S3_BUCKET,
-        Key: 'waterLevel.json',
+        Key: fileName,
         Body: JSON.stringify(body),
         ContentType: 'application/json'
     };
+
     return s3.putObject(params).promise();
 }
