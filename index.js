@@ -26,7 +26,7 @@ function *processEvent(event, context, callback) {
         callback('end fail');
     });
 
-    const waterLevel = convert.toCommonJson(data);
+    const waterLevel = convert.toFormattedJson(data);
     console.log(waterLevel);
 
     putWaterLevel(waterLevel)

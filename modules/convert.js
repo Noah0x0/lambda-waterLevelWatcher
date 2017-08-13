@@ -2,7 +2,7 @@
 const moment = require('moment');
 
 module.exports = {
-    toCommonJson:  (data , locale = null) => {
+    toFormattedJson:  (data , locale = null) => {
         // TODO localeで切り替えられるようにする
 
         // 石川河川水位APIに合わせて、値を変換する
