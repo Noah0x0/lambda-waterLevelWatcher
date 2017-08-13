@@ -7,7 +7,6 @@ module.exports = {
 
         // 石川河川水位APIに合わせて、値を変換する
         // constants
-        const ISO8601 = "YYYY-MM-DD HH:mm:ss";
         const riverNum = '4_10'; // asano river
         const observatoryNum = '4357_4_84276000_51'; // okihashi observatory
 
@@ -21,14 +20,13 @@ module.exports = {
 
         // creating timestamp
         const dateSplit = masterData['etim'].split('-');
-        const timeStr = dateSplit[0] + '-' +dateSplit[1] + '-' + dateSplit[2] + " " + dateSplit[3] + ":" + dateSplit[4];
-        const timestamp = new moment(timeStr);
+        const timestamp = new moment(dateSplit);
 
         // TODO レスポンスの雛形オブジェクトの作成
         return {
             riverName: masterData['riverName'].trim(),
             height:  customData['stageAlarmLv7'],
-            timestamp:  timestamp.format(ISO8601),
+            timestamp: timestamp.utc().format(),
             waterLevel:  latestData[riverNum]['dataStr'],
             dataTrend:  latestData[riverNum]['dataTrend'],
             dataLevel: latestData[riverNum]['dataLevel'],
