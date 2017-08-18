@@ -24,6 +24,7 @@ function *processEvent(event, context, callback) {
     const data = yield request(options).catch((err) => {
         console.error(err.stack);
         callback('end fail');
+        return;
     });
 
     const waterLevel = convert.toFormattedJson(data);
@@ -33,20 +34,28 @@ function *processEvent(event, context, callback) {
         .then((res) => {
             console.log(res);
             callback(null, 'success');
+            return;
         })
         .catch((err) => {
             console.error(err.stack);
             callback(err);
+            return;
         });
 }
 
 function putWaterLevel(body) {
-    const dt = new Date().getTime();
-    const fileName = `sample_json/waterLevel${dt}.json`;
+    console.log(body.timestamp);
+    const day = body.timestamp.split('T')[0];
+    const daySplit = day.split('-');
+    const dictory = `waterLevel/japan/ishikawa/asano/${daySplit[0]}/${daySplit[1]}/${daySplit[2]}/`;
+
+    const time = body.timestamp.substring(11, 19);
+    const fileName = `${time}.json`;
+    console.log(`${dictory}${fileName}`);
 
     const params = {
         Bucket: process.env.S3_BUCKET,
-        Key: fileName,
+        Key: `${dictory}${fileName}`,
         Body: JSON.stringify(body),
         ContentType: 'application/json'
     };
