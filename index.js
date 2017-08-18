@@ -35,7 +35,7 @@ function *processEvent(event, context, callback) {
             callback(null, 'success');
         })
         .catch((err) => {
-            console.err(err.stack);
+            console.error(err.stack);
             callback(err);
         });
 }
