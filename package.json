@@ -1,7 +1,7 @@
 {
   "name": "lambda-waterlevelwatcher",
   "version": "0.0.1",
-  "description": "lambda for watching water level & logging it.",
+  "description": "lambda for watching water level & logging it. feature Ishikawa",
   "main": "index.js",
   "scripts": {
     "setup": "node-lambda setup",
