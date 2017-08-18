@@ -4,6 +4,8 @@
   "description": "lambda for watching water level & logging it.",
   "main": "index.js",
   "scripts": {
+    "start": "node-lambda run",
+    "deploy": "node-lambda deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/Noah0x0/lambda-waterLevelWatcher#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "moment": "^2.18.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   },
