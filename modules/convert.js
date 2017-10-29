@@ -20,6 +20,7 @@ module.exports = {
 
         // creating timestamp
         const dateSplit = masterData['etim'].split('-');
+        dateSplit[1] = `${parseInt(dateSplit[1], 10) - 1}`; // momentでは0~11で月を表すため
         const timestamp = new moment(dateSplit);
 
         // TODO レスポンスの雛形オブジェクトの作成
